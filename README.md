@@ -1,73 +1,32 @@
-# React + TypeScript + Vite
+# Turboly Coding Challenge
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A simple task manager web app built with React, TypeScript, Tailwind CSS, and Supabase.
 
-Currently, two official plugins are available:
+## Test Users
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+| Email | Password |
+|-------|----------|
+| user@example.com | passwords |
+| user2@example.com | passwords |
 
-## React Compiler
+## Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Authentication**: Log in / log out with Supabase Auth
+- **Task CRUD**: Create, read, update, and delete tasks
+- **Task fields**: Description, due date, priority (low/medium/high), completed status
+- **Side-by-side layout**: Task form and task list displayed next to each other
+- **Scrollable list**: Task list scrolls independently without scrolling the whole page
+- **Default due date**: Pre-filled with today's date when creating a new task
 
-## Expanding the ESLint configuration
+## Tech Stack
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- React + TypeScript + Vite
+- Tailwind CSS
+- Supabase (Auth + PostgreSQL)
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Setup
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+1. Copy `.env.example` to `.env` and fill in your Supabase credentials
+2. Run the SQL in `supabase-schema.sql` in your Supabase SQL Editor
+3. Install dependencies: `npm install`
+4. Start dev server: `npm run dev`
