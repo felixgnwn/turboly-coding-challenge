@@ -2,9 +2,9 @@ import { useState } from 'react';
 import type { User } from '@supabase/supabase-js';
 import { useAuth } from '@/hooks/useAuth';
 import { useTasks } from '@/hooks/useTasks';
-import { LoginForm } from '@/components/features/LoginForm';
-import { TaskForm } from '@/components/features/TaskForm';
-import { TaskList } from '@/components/features/TaskList';
+import { LoginForm } from '@/components/features/auth/LoginForm';
+import { TaskForm } from '@/components/features/task/TaskForm';
+import { TaskList } from '@/components/features/task/TaskList';
 
 export default function App() {
   const { user, isLoading, signIn, signOut } = useAuth();
