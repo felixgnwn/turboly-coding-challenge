@@ -2,6 +2,8 @@
 
 A simple task manager web app built with React, TypeScript, Tailwind CSS, and Supabase.
 
+Live Link: https://turboly-coding-challenge.vercel.app
+
 ## Test Users
 
 | Email | Password |
