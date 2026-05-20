@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { todayISO } from '@/utils/date';
 import { Input } from '@/components/ui/Input';
 import { Select } from '@/components/ui/Select';
 import { Button } from '@/components/ui/Button';
@@ -9,10 +10,6 @@ interface TaskFormProps {
   initialTask?: Task | null;
   onSubmit: (input: TaskInput) => Promise<{ error: string | null }>;
   onCancel?: () => void;
-}
-
-function todayISO() {
-  return new Date().toISOString().split('T')[0];
 }
 
 export function TaskForm({ initialTask, onSubmit, onCancel }: TaskFormProps) {
@@ -26,8 +23,20 @@ export function TaskForm({ initialTask, onSubmit, onCancel }: TaskFormProps) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
+    const trimmedDescription = description.trim();
+
+    if (!trimmedDescription) {
+      setError('Description is required.');
+      return;
+    }
+
     setPending(true);
-    const result = await onSubmit({ description, due_date: dueDate, priority, completed });
+    const result = await onSubmit({
+      description: trimmedDescription,
+      due_date: dueDate,
+      priority,
+      completed,
+    });
     setPending(false);
     if (result.error) {
       setError(result.error);
