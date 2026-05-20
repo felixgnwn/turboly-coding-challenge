@@ -1,7 +1,7 @@
-import type { FilterState } from '@/types/task';
 import { Input } from '@/components/ui/Input';
 import { Select } from '@/components/ui/Select';
 import { Button } from '@/components/ui/Button';
+import type { FilterState } from '@/types/task';
 
 interface TaskFiltersProps {
   filters: FilterState;

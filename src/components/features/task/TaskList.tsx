@@ -35,7 +35,7 @@ export function TaskList({ tasks, onUpdate, onDelete }: TaskListProps) {
   if (tasks.length === 0) {
     return (
       <div className="rounded-xl bg-white p-8 text-center shadow-md">
-        <p className="text-gray-500">No tasks yet. Create one above.</p>
+        <p className="text-gray-500">No tasks yet. Create one to get started.</p>
       </div>
     );
   }
