@@ -19,16 +19,19 @@ Live Link: https://turboly-coding-challenge.vercel.app
 - **Task Filters**: Search, filter by due date, filter by priority, sort by due date (asc/desc), sort by priority (asc/desc), reset filters
 - **Scrollable list**: Task list scrolls independently without scrolling the whole page
 - **Default due date**: Pre-filled with today's date when creating a new task
-- **Reusable UI components**: Consistent Button, Input, Select, and Checkbox components with variants
+- **Due-Today Alert**: Highlights incomplete tasks due today
+- **Adaptive Layouts**: Separate mobile, tablet, and desktop layouts
+- **Reusable UI components**: Consistent Button, Input, Select, Checkbox, and Modal components with variants
 
 ### UI Components
 
-All form elements are built as reusable components under `src/components/ui/`:
+All shared UI components are built under `src/components/ui/`:
 
-- **Button** — `variant` (`primary` | `secondary` | `danger` | `ghost` | `outline`), `size` (`sm` | `md` | `lg`)
-- **Input** — Standard input with optional `label` prop
-- **Select** — Dropdown with `options` array and optional `label`
-- **Checkbox** — Checkbox with optional `label`
+- **Button** - `variant` (`primary` | `secondary` | `danger` | `ghost` | `outline`), `size` (`sm` | `md` | `lg`)
+- **Input** - Standard input with optional `label`
+- **Select** - Dropdown with an `options` array and optional `label`
+- **Checkbox** - Checkbox with optional `label`
+- **Modal** - Simple full-screen modal used for mobile task creation
 
 ## Tech Stack
 
