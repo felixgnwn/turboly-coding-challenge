@@ -16,13 +16,18 @@ export function useAuth() {
   });
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data }) => {
-      setState({
-        user: data.session?.user ?? null,
-        session: data.session,
-        isLoading: false,
+    supabase.auth
+      .getSession()
+      .then(({ data }) => {
+        setState({
+          user: data.session?.user ?? null,
+          session: data.session,
+          isLoading: false,
+        });
+      })
+      .catch(() => {
+        setState((prev) => ({ ...prev, isLoading: false }));
       });
-    });
 
     const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
       setState({
