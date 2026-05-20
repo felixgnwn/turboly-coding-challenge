@@ -5,6 +5,8 @@ import { useTasks } from '@/hooks/useTasks';
 import { LoginForm } from '@/components/features/auth/LoginForm';
 import { TaskForm } from '@/components/features/task/TaskForm';
 import { TaskList } from '@/components/features/task/TaskList';
+import { TaskFilters } from '@/components/features/task/TaskFilters';
+import type { FilterState } from '@/components/features/task/TaskFilters';
 
 export default function App() {
   const { user, isLoading, signIn, signOut } = useAuth();
@@ -50,8 +52,48 @@ export default function App() {
   );
 }
 
+const PRIORITY_MAP: Record<string, number> = { low: 1, medium: 2, high: 3 };
+
+function applyFilters(tasks: ReturnType<typeof useTasks>['tasks'], filters: FilterState) {
+  let result = [...tasks];
+
+  if (filters.search.trim()) {
+    const q = filters.search.toLowerCase();
+    result = result.filter((t) => t.description.toLowerCase().includes(q));
+  }
+  if (filters.date) {
+    result = result.filter((t) => t.due_date === filters.date);
+  }
+  if (filters.priority) {
+    result = result.filter((t) => t.priority === filters.priority);
+  }
+
+  result.sort((a, b) => {
+    if (filters.sortDueDate) {
+      const cmp = a.due_date.localeCompare(b.due_date);
+      if (cmp !== 0) return filters.sortDueDate === 'asc' ? cmp : -cmp;
+    }
+    if (filters.sortPriority) {
+      const cmp = PRIORITY_MAP[a.priority] - PRIORITY_MAP[b.priority];
+      if (cmp !== 0) return filters.sortPriority === 'asc' ? cmp : -cmp;
+    }
+    return 0;
+  });
+
+  return result;
+}
+
 function TaskDashboard({ user, onSignOut }: { user: User; onSignOut: () => Promise<{ error: Error | null }> }) {
   const { tasks, loading, createTask, updateTask, deleteTask } = useTasks(user.id);
+  const [filters, setFilters] = useState<FilterState>({
+    search: '',
+    date: '',
+    priority: '',
+    sortDueDate: null,
+    sortPriority: null,
+  });
+
+  const filteredTasks = applyFilters(tasks, filters);
 
   return (
     <main className="mx-auto flex h-screen max-w-6xl flex-col gap-6 overflow-hidden bg-gray-50 p-6">
@@ -73,12 +115,15 @@ function TaskDashboard({ user, onSignOut }: { user: User; onSignOut: () => Promi
           <TaskForm onSubmit={createTask} />
         </aside>
 
-        <section className="flex min-h-0 flex-1 flex-col overflow-y-auto">
-          {loading ? (
-            <p className="py-8 text-center text-gray-600">Loading tasks...</p>
-          ) : (
-            <TaskList tasks={tasks} onUpdate={updateTask} onDelete={deleteTask} />
-          )}
+        <section className="flex min-h-0 flex-1 flex-col gap-4">
+          <TaskFilters filters={filters} onChange={setFilters} />
+          <div className="flex min-h-0 flex-1 flex-col overflow-y-auto">
+            {loading ? (
+              <p className="py-8 text-center text-gray-600">Loading tasks...</p>
+            ) : (
+              <TaskList tasks={filteredTasks} onUpdate={updateTask} onDelete={deleteTask} />
+            )}
+          </div>
         </section>
       </div>
     </main>
