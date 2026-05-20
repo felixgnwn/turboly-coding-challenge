@@ -1,4 +1,7 @@
 import type { FilterState } from '@/types/task';
+import { Input } from '@/components/ui/Input';
+import { Select } from '@/components/ui/Select';
+import { Button } from '@/components/ui/Button';
 
 interface TaskFiltersProps {
   filters: FilterState;
@@ -37,51 +40,44 @@ export function TaskFilters({ filters, onChange }: TaskFiltersProps) {
     <div className="flex flex-col gap-3 rounded-xl bg-white p-4 shadow-md">
       <div className="flex flex-wrap items-end gap-3">
         <div className="flex min-w-48 flex-1 flex-col gap-1">
-          <label htmlFor="search" className="text-xs font-medium text-gray-600">
-            Search
-          </label>
-          <input
+          <Input
             id="search"
+            label="Search"
             type="text"
             placeholder="Search tasks..."
             value={filters.search}
             onChange={(e) => update({ search: e.target.value })}
-            className="rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
 
         <div className="flex min-w-40 flex-1 flex-col gap-1">
-          <label htmlFor="filterDate" className="text-xs font-medium text-gray-600">
-            Due Date
-          </label>
-          <input
+          <Input
             id="filterDate"
+            label="Due Date"
             type="date"
             value={filters.date}
             onChange={(e) => update({ date: e.target.value })}
-            className="cursor-text rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
 
         <div className="flex min-w-32 flex-1 flex-col gap-1">
-          <label htmlFor="filterPriority" className="text-xs font-medium text-gray-600">
-            Priority
-          </label>
-          <select
+          <Select
             id="filterPriority"
+            label="Priority"
             value={filters.priority}
             onChange={(e) => update({ priority: e.target.value as FilterState['priority'] })}
-            className="cursor-pointer rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-          >
-            <option value="">All</option>
-            <option value="low">Low</option>
-            <option value="medium">Medium</option>
-            <option value="high">High</option>
-          </select>
+            options={[
+              { value: '', label: 'All' },
+              { value: 'low', label: 'Low' },
+              { value: 'medium', label: 'Medium' },
+              { value: 'high', label: 'High' },
+            ]}
+          />
         </div>
 
-        <button
+        <Button
           type="button"
+          variant="secondary"
           onClick={() =>
             onChange({
               search: '',
@@ -91,35 +87,26 @@ export function TaskFilters({ filters, onChange }: TaskFiltersProps) {
               sortPriority: null,
             })
           }
-          className="rounded-md bg-gray-200 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-300"
         >
           Reset
-        </button>
+        </Button>
       </div>
 
       <div className="flex flex-wrap items-center gap-2">
-        <button
+        <Button
           type="button"
+          variant={dueDateActive ? 'primary' : 'secondary'}
           onClick={() => update({ sortDueDate: toggleDir(filters.sortDueDate) })}
-          className={`rounded-md px-4 py-2 text-sm font-medium ${
-            dueDateActive
-              ? 'bg-blue-600 text-white hover:bg-blue-700'
-              : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-          }`}
         >
           {dueDateLabel}
-        </button>
-        <button
+        </Button>
+        <Button
           type="button"
+          variant={priorityActive ? 'primary' : 'secondary'}
           onClick={() => update({ sortPriority: toggleDir(filters.sortPriority) })}
-          className={`rounded-md px-4 py-2 text-sm font-medium ${
-            priorityActive
-              ? 'bg-blue-600 text-white hover:bg-blue-700'
-              : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-          }`}
         >
           {priorityLabel}
-        </button>
+        </Button>
       </div>
     </div>
   );

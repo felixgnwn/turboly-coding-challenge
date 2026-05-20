@@ -2,11 +2,12 @@ import { useState } from 'react';
 import type { User } from '@supabase/supabase-js';
 import { useAuth } from '@/hooks/useAuth';
 import { useTasks } from '@/hooks/useTasks';
-import { LoginForm } from '@/components/features/auth/LoginForm';
+import { useFilteredTasks } from '@/hooks/useFilteredTasks';
 import { TaskForm } from '@/components/features/task/TaskForm';
 import { TaskList } from '@/components/features/task/TaskList';
+import { LoginForm } from '@/components/features/auth/LoginForm';
 import { TaskFilters } from '@/components/features/task/TaskFilters';
-import { useFilteredTasks } from '@/hooks/useFilteredTasks';
+import { Button } from '@/components/ui/Button';
 
 export default function App() {
   const { user, isLoading, signIn, signOut } = useAuth();
@@ -63,12 +64,9 @@ function TaskDashboard({ user, onSignOut }: { user: User; onSignOut: () => Promi
           <h1 className="text-xl font-bold text-gray-900">My Tasks</h1>
           <p className="text-sm text-gray-600">{user.email}</p>
         </div>
-        <button
-          onClick={() => onSignOut()}
-          className="rounded-md bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700"
-        >
+        <Button variant="danger" onClick={() => onSignOut()}>
           Log out
-        </button>
+        </Button>
       </header>
 
       <div className="flex min-h-0 flex-1 flex-col gap-6 overflow-hidden lg:flex-row">

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { TaskForm } from './TaskForm';
+import { Button } from '@/components/ui/Button';
 import type { Task, TaskInput } from '@/types/task';
 
 function priorityClass(priority: Task['priority']) {
@@ -77,19 +78,17 @@ export function TaskList({ tasks, onUpdate, onDelete }: TaskListProps) {
                 </div>
               </div>
               <div className="flex gap-2">
-                <button
-                  onClick={() => setEditingId(task.id)}
-                  className="rounded-md bg-gray-100 px-3 py-1.5 text-sm font-medium text-gray-700 hover:bg-gray-200"
-                >
+                <Button variant="ghost" size="sm" onClick={() => setEditingId(task.id)}>
                   Edit
-                </button>
-                <button
+                </Button>
+                <Button
+                  variant="danger"
+                  size="sm"
                   onClick={() => handleDelete(task.id)}
                   disabled={deletingId === task.id}
-                  className="rounded-md bg-red-100 px-3 py-1.5 text-sm font-medium text-red-700 hover:bg-red-200 disabled:opacity-50"
                 >
                   {deletingId === task.id ? 'Deleting...' : 'Delete'}
-                </button>
+                </Button>
               </div>
             </div>
           )}
