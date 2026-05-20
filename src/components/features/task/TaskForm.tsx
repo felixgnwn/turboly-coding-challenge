@@ -75,12 +75,14 @@ export function TaskForm({ initialTask, onSubmit, onCancel }: TaskFormProps) {
         ]}
       />
 
-      <Checkbox
-        id="completed"
-        label="Completed"
-        checked={completed}
-        onChange={(e) => setCompleted(e.target.checked)}
-      />
+      {initialTask && (
+        <Checkbox
+          id="completed"
+          label="Completed"
+          checked={completed}
+          onChange={(e) => setCompleted(e.target.checked)}
+        />
+      )}
 
       {error && <p className="text-sm text-red-600">{error}</p>}
 
