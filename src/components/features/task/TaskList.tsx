@@ -26,8 +26,9 @@ export function TaskList({ tasks, onUpdate, onDelete }: TaskListProps) {
 
   const handleDelete = async (id: string) => {
     setDeletingId(id);
-    const result = await onDelete(id);
-    if (!result.error) {
+    try {
+      await onDelete(id);
+    } finally {
       setDeletingId(null);
     }
   };

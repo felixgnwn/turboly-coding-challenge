@@ -10,7 +10,7 @@ import { Button } from '@/components/ui/Button';
 import type { LayoutProps } from '@/types/layout';
 
 export function MobileLayout({ user, onSignOut }: LayoutProps) {
-  const { tasks, loading, createTask, updateTask, deleteTask } = useTasks(user.id);
+  const { tasks, loading, error, createTask, updateTask, deleteTask } = useTasks(user.id);
   const { filtered: filteredTasks, filters, setFilters } = useFilteredTasks(tasks);
   const [createOpen, setCreateOpen] = useState(false);
 
@@ -29,6 +29,11 @@ export function MobileLayout({ user, onSignOut }: LayoutProps) {
       <main className="flex-1 space-y-3 overflow-y-auto p-4 pb-20">
         <TaskFilters filters={filters} onChange={setFilters} />
         <DueTodayAlert tasks={tasks} />
+        {error && (
+          <p className="rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700">
+            {error}
+          </p>
+        )}
 
         {loading ? (
           <p className="py-8 text-center text-gray-600">Loading tasks...</p>

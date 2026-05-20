@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/Button';
 import type { LayoutProps } from '@/types/layout';
 
 export function TabletLayout({ user, onSignOut }: LayoutProps) {
-  const { tasks, loading, createTask, updateTask, deleteTask } = useTasks(user.id);
+  const { tasks, loading, error, createTask, updateTask, deleteTask } = useTasks(user.id);
   const { filtered: filteredTasks, filters, setFilters } = useFilteredTasks(tasks);
 
   return (
@@ -30,6 +30,11 @@ export function TabletLayout({ user, onSignOut }: LayoutProps) {
 
       <DueTodayAlert tasks={tasks} />
       <TaskFilters filters={filters} onChange={setFilters} />
+      {error && (
+        <p className="rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700">
+          {error}
+        </p>
+      )}
 
       <div className="flex-1 overflow-y-auto">
         {loading ? (

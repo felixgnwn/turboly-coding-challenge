@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/Button';
 import type { LayoutProps } from '@/types/layout';
 
 export function DesktopLayout({ user, onSignOut }: LayoutProps) {
-  const { tasks, loading, createTask, updateTask, deleteTask } = useTasks(user.id);
+  const { tasks, loading, error, createTask, updateTask, deleteTask } = useTasks(user.id);
   const { filtered: filteredTasks, filters, setFilters } = useFilteredTasks(tasks);
 
   return (
@@ -31,6 +31,11 @@ export function DesktopLayout({ user, onSignOut }: LayoutProps) {
         <section className="flex min-h-0 flex-1 flex-col gap-4">
           <TaskFilters filters={filters} onChange={setFilters} />
           <DueTodayAlert tasks={tasks} />
+          {error && (
+            <p className="rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700">
+              {error}
+            </p>
+          )}
           <div className="flex min-h-0 flex-1 flex-col overflow-y-auto">
             {loading ? (
               <p className="py-8 text-center text-gray-600">Loading tasks...</p>
