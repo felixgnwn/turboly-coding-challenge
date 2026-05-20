@@ -11,6 +11,17 @@ Live Link: https://turboly-coding-challenge.vercel.app
 | user@example.com | passwords |
 | user2@example.com | passwords |
 
+## UI
+
+### Desktop
+![Desktop UI](./src/assets/desktop-ui.png)
+
+### Tablet
+![Tablet UI](./src/assets/tablet-ui.png)
+
+### Mobile
+![Mobile UI](./src/assets/mobile-ui.png)
+
 ## Features
 
 - **Authentication**: Log in / log out with Supabase Auth

@@ -53,6 +53,20 @@ export default function App() {
           error={error}
           isLoading={pending}
         />
+        <div className="mt-6 rounded-lg bg-gray-50 p-4 text-sm text-gray-600">
+          <p className="font-semibold text-gray-800">Test users</p>
+          <div className="mt-2 space-y-1">
+            <p>
+              <span className="font-medium">Email:</span> user@example.com
+            </p>
+            <p>
+              <span className="font-medium">Email:</span> user2@example.com
+            </p>
+            <p>
+              <span className="font-medium">Password:</span> passwords
+            </p>
+          </div>
+        </div>
       </div>
     </main>
   );
