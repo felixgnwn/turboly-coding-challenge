@@ -1,7 +1,17 @@
 import { useState } from 'react';
-import type { Task } from '@/types/task';
 import { TaskForm } from './TaskForm';
-import type { TaskInput } from '@/types/task';
+import type { Task, TaskInput } from '@/types/task';
+
+function priorityClass(priority: Task['priority']) {
+  switch (priority) {
+    case 'high':
+      return 'bg-red-100 text-red-700';
+    case 'medium':
+      return 'bg-yellow-100 text-yellow-700';
+    default:
+      return 'bg-green-100 text-green-700';
+  }
+}
 
 interface TaskListProps {
   tasks: Task[];
@@ -15,8 +25,10 @@ export function TaskList({ tasks, onUpdate, onDelete }: TaskListProps) {
 
   const handleDelete = async (id: string) => {
     setDeletingId(id);
-    await onDelete(id);
-    setDeletingId(null);
+    const result = await onDelete(id);
+    if (!result.error) {
+      setDeletingId(null);
+    }
   };
 
   if (tasks.length === 0) {
@@ -53,13 +65,7 @@ export function TaskList({ tasks, onUpdate, onDelete }: TaskListProps) {
                 <div className="flex items-center gap-3 text-sm text-gray-600">
                   <span>Due: {task.due_date}</span>
                   <span
-                    className={`rounded-full px-2 py-0.5 text-xs font-semibold ${
-                      task.priority === 'high'
-                        ? 'bg-red-100 text-red-700'
-                        : task.priority === 'medium'
-                          ? 'bg-yellow-100 text-yellow-700'
-                          : 'bg-green-100 text-green-700'
-                    }`}
+                    className={`rounded-full px-2 py-0.5 text-xs font-semibold ${priorityClass(task.priority)}`}
                   >
                     {task.priority}
                   </span>

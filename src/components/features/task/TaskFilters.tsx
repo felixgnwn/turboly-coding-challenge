@@ -1,19 +1,11 @@
-import type { TaskPriority } from '@/types/task';
-
-export interface FilterState {
-  search: string;
-  date: string;
-  priority: '' | TaskPriority;
-  sortDueDate: 'asc' | 'desc' | null;
-  sortPriority: 'asc' | 'desc' | null;
-}
+import type { FilterState } from '@/types/task';
 
 interface TaskFiltersProps {
   filters: FilterState;
   onChange: (filters: FilterState) => void;
 }
 
-function toggleDir(current: 'asc' | 'desc' | null): 'asc' | 'desc' | null {
+function toggleDir(current: FilterState['sortDueDate']): FilterState['sortDueDate'] {
   if (current === null) return 'asc';
   if (current === 'asc') return 'desc';
   return null;
